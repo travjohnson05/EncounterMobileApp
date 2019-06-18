@@ -34,6 +34,14 @@ const routes: Routes = [
           }
         ]
       },
+      { path: 'podcast',
+        children: [
+          {
+            path: '',
+            loadChildren: './podcast/podcast.module#PodcastPageModule'
+          }
+        ]
+      },
       {
         path: '',
         redirectTo: '/tabs/home',
