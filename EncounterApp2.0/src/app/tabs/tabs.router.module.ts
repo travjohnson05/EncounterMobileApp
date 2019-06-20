@@ -38,7 +38,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: './podcast/podcast.module#PodcastPageModule'
+            loadChildren: '../podcast/podcast.module#PodcastPageModule'
           }
         ]
       },
