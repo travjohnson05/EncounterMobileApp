@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 import { StudentInfoServiceService } from './student-info-service.service';
+import { EventServiceService } from './event-service.service';
 
 
 @Component({
@@ -18,26 +19,22 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private storage: Storage,
-    private studentInfoService: StudentInfoServiceService
+    private studentInfoService: StudentInfoServiceService,
+    private eventService: EventServiceService
   ) {
     this.initializeApp();
     this.studentInfoService.loadStudentInfo();
+    this.eventService.loadEventObject();
+    this.eventService.load().then(data => {
+        // console.log(data);
+        console.log(eventService.eventsObject);
+    });
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-    });
-  }
-
-  storageTest(){
-    // set a key/value
-    this.storage.set('name', 'Travis');
-
-    // Or to get a key/value pair
-    this.storage.get('name').then((val) => {
-      console.log('Your name is', val);
     });
   }
 }
