@@ -13,6 +13,7 @@ import { EventServiceService } from './event-service.service';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  eventData: any;
 
   constructor(
     private platform: Platform,
@@ -20,14 +21,12 @@ export class AppComponent {
     private statusBar: StatusBar,
     private storage: Storage,
     private studentInfoService: StudentInfoServiceService,
-    private eventService: EventServiceService
+    private eventService: EventServiceService,
   ) {
     this.initializeApp();
     this.studentInfoService.loadStudentInfo();
-    this.eventService.loadEventObject();
     this.eventService.load().then(data => {
-        // console.log(data);
-        console.log(eventService.eventsObject);
+      this.eventData = data;
     });
   }
 

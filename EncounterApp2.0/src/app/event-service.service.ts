@@ -13,95 +13,85 @@ export class EventServiceService {
     this.data = null;
   }
 
-  loadEventObject(){
-    this.load().then(data => {
-      this.eventsObject = data.items.map((resultData) => {
-        // The .map lets me take the original data and map it to the format the audio player wants
+  formatRawEventData(data){
+    const value = data.items.map((resultData) => {
+      // The .map lets me take the original data and map it to the proper format
 
-        if ('date' in resultData.start) {
-          const date = resultData.start.date.split("-"); //split yyyy mm dd
-          const startYear = date[0];
-          const startMonth = this.monthString(date[1]);
-          const startDay = date[2];
-          const startDateISO = new Date(startMonth + " " + startDay + ", " + startYear + " 00:00:00");
-          const startDayWeek = this.dayString(startDateISO.getDay());
+      if ('date' in resultData.start) {
+        const date = resultData.start.date.split("-"); //split yyyy mm dd
+        const startYear = date[0];
+        const startMonth = this.monthString(date[1]);
+        const startDay = date[2];
+        const startDateISO = new Date(startMonth + " " + startDay + ", " + startYear + " 00:00:00");
+        const startDayWeek = this.dayString(startDateISO.getDay());
 
-          return {
-            link: resultData.htmlLink,
-            startDate: resultData.start.date,
-            startYear: startYear,
-            startMonth: startMonth,
-            startDay: startDay,
-            startDayWeek: startDayWeek,
-            startHour: null,
-            startMin: null,
-            startTime: null,
-            ampm: null,
-            summary: resultData.summary,
-            description: resultData.description
-          };
-        } else {
-          const dateTime = resultData.start.dateTime.split("T"); //split date from time
-          const date = dateTime[0].split("-"); //split yyyy mm dd
-          const startYear = date[0];
-          const startMonth = this.monthString(date[1]);
-          const startDay = date[2];
-          const startDateISO = new Date(startMonth + " " + startDay + ", " + startYear + " 00:00:00");
-          const startDayWeek = this.dayString(startDateISO.getDay());
-          const time = dateTime[1].split(":"); //split hh ss etc...
-          const startHour = this.twelveHr(time[0]);
-          const ampm = this.AmPm(time[0]);
-          const startMin = time[1];
+        return {
+          link: resultData.htmlLink,
+          startDate: resultData.start.date,
+          startYear: startYear,
+          startMonth: startMonth,
+          startDay: startDay,
+          startDayWeek: startDayWeek,
+          startHour: null,
+          startMin: null,
+          startTime: null,
+          ampm: null,
+          summary: resultData.summary,
+          description: resultData.description
+        };
+      } else {
+        const dateTime = resultData.start.dateTime.split("T"); //split date from time
+        const date = dateTime[0].split("-"); //split yyyy mm dd
+        const startYear = date[0];
+        const startMonth = this.monthString(date[1]);
+        const startDay = date[2];
+        const startDateISO = new Date(startMonth + " " + startDay + ", " + startYear + " 00:00:00");
+        const startDayWeek = this.dayString(startDateISO.getDay());
+        const time = dateTime[1].split(":"); //split hh ss etc...
+        const startHour = this.twelveHr(time[0]);
+        const ampm = this.AmPm(time[0]);
+        const startMin = time[1];
 
-          return {
-            link: resultData.htmlLink,
-            startDate: resultData.start.dateTime,
-            startYear: startYear,
-            startMonth: startMonth,
-            startDay: startDay,
-            startDayWeek: startDayWeek,
-            startHour: startHour,
-            startMin: startMin,
-            startTime: startHour + ":" + startMin + " " + ampm,
-            ampm: ampm,
-            summary: resultData.summary,
-            description: resultData.description
-          };
-        }
-
-      });
-
-      // this.globalOverlayProvider.dismissLoading();
-
-    }, (error) => {
-      //if contains Error: timeout, handle
-      console.log(error);
-      // this.globalOverlayProvider.dismissLoading();
+        return {
+          link: resultData.htmlLink,
+          startDate: resultData.start.dateTime,
+          startYear: startYear,
+          startMonth: startMonth,
+          startDay: startDay,
+          startDayWeek: startDayWeek,
+          startHour: startHour,
+          startMin: startMin,
+          startTime: startHour + ":" + startMin + " " + ampm,
+          ampm: ampm,
+          summary: resultData.summary,
+          description: resultData.description
+        };
+      }
     });
 
+    return value;
   }
 
-  load() {
+  async load() {
     if (this.data) {
       // already loaded data
-      return Promise.resolve(this.data);
+      return this.data;
     }
-
+    const response = await this.http.get('https://www.googleapis.com/calendar/v3/calendars/1mngef4tbnpe7bmre6leqkgfc8%40group.calendar.google.com/events?key=AIzaSyCUEemyQPFrF7TJy1aYkocLlSYfx5hQFys&showDeleted=false&singleEvents=true&orderBy=startTime&timeMin=' + new Date().toISOString()).toPromise();
+    console.log(this.formatRawEventData(response));
+    return this.formatRawEventData(response);
     // don't have the data yet
-    return new Promise(resolve => {
-      // tslint:disable-next-line: max-line-length
-      console.log("load()");
-      this.http.get('https://www.googleapis.com/calendar/v3/calendars/1mngef4tbnpe7bmre6leqkgfc8%40group.calendar.google.com/events?key=AIzaSyCUEemyQPFrF7TJy1aYkocLlSYfx5hQFys&showDeleted=false&singleEvents=true&orderBy=startTime&timeMin=' + new Date().toISOString())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-        },
-        err =>{
-            console.log(err);
-            // this.globalOverlayProvider.dismissLoading();
-            // this.errorHandler.handleHTTPError(err);
-        });
-    });
+    // return await this.http.get('https://www.googleapis.com/calendar/v3/calendars/1mngef4tbnpe7bmre6leqkgfc8%40group.calendar.google.com/events?key=AIzaSyCUEemyQPFrF7TJy1aYkocLlSYfx5hQFys&showDeleted=false&singleEvents=true&orderBy=startTime&timeMin=' + new Date().toISOString())
+    //     .subscribe(async data => {
+    //       // this.data = data;
+    //       console.log(this.formatRawEventData(data));
+    //       return this.formatRawEventData(data).resolve;
+    //     },
+    //     err => {
+    //         console.log(err);
+    //         // this.globalOverlayProvider.dismissLoading();
+    //         // this.errorHandler.handleHTTPError(err);
+    //     });
   }
 
 
