@@ -1,7 +1,5 @@
 {
   "name": "EncounterApp2.0",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
+  "integrations": {},
+  "type": "react"
 }
