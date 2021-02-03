@@ -69,7 +69,7 @@ export default defineComponent({
       },
       {
         title: 'Podcast',
-        url: '/podcast',
+        url: '/podcasts',
         displayTitle: 'Podcast',
         iosIcon: micOutline,
         mdIcon: micSharp
