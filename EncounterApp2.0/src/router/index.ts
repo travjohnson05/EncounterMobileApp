@@ -4,12 +4,32 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '',
-    redirect: '/folder/Inbox'
+    redirect: '/home'
+  },
+  // {
+  //   path: '/:id',
+  //   component: () => import ('../views/Page.vue')
+  // },
+  {
+    path: '/home',
+    component: () => import ('../views/Home.vue')
   },
   {
-    path: '/folder/:id',
-    component: () => import ('../views/Folder.vue')
-  }
+    path: '/events',
+    component: () => import ('../views/Events.vue')
+  },
+  {
+    path: '/podcasts',
+    component: () => import ('../views/Podcasts.vue')
+  },
+  {
+    path: '/signups',
+    component: () => import ('../views/Signups.vue')
+  },
+  {
+    path: '/give',
+    redirect: '/home'
+  },
 ]
 
 const router = createRouter({
