@@ -5,7 +5,7 @@
     </base-layout>
 </template>
 
-<script lang="ts">
+<script>
 
 import BaseLayout from '@/components/BaseLayout.vue';
 

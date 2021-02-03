@@ -21,7 +21,7 @@
   </IonApp>
 </template>
 
-<script lang="ts">
+<script>
 import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
@@ -106,7 +106,7 @@ export default defineComponent({
       calendarSharp, 
       cardOutline, 
       cardSharp, 
-      isSelected: (url: string) => url === route.path ? 'selected' : ''
+      isSelected: (url) => url === route.path ? 'selected' : ''
     }
   }
 });

@@ -5,7 +5,7 @@
     </base-layout>
 </template>
 
-<script lang="ts">
+<script>
 // import { IonButtons } from '@ionic/vue';
 import BaseLayout from '@/components/BaseLayout.vue';
 
