@@ -42,11 +42,10 @@ export default {
 </script>
 
 <style scoped>
-#container {
+/* #container {
   left: 0;
   right: 0;
   top: 50%;
-  transform: translateY(-50%);
 }
 
 #container strong {
@@ -59,7 +58,7 @@ export default {
   line-height: 22px;
   color: #8c8c8c;
   margin: 0;
-}
+} */
 
 #container a {
   text-decoration: none;

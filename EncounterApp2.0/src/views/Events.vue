@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     getEvents(){
-      this.axios.get("http://localhost:8080/encounter-app-api/events").then((response) => {
+      this.axios.get("http://travj.travjohnson.net/encounter-app-api/events").then((response) => {
         this.events = response.data;
       })
     }
