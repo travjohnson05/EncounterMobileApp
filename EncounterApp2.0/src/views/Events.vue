@@ -10,7 +10,7 @@
                 </ion-col>
                 <ion-col>
                   <h2>{{event.startMonth}}</h2>
-                  <p>{{event.startTime}}</p>
+                  <div class="start-time"><ion-icon :icon="timeOutline"></ion-icon>{{event.startTime}}</div>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -32,12 +32,18 @@
 <script>
 import { IonCard, IonGrid, IonRow, IonCol, IonCardHeader, IonCardContent } from '@ionic/vue';
 import BaseLayout from '@/components/BaseLayout.vue';
+import { timeOutline } from 'ionicons/icons';
 
 
 export default {
   name: 'Events',
   components: {
     BaseLayout, IonCard, IonGrid, IonRow, IonCol, IonCardHeader, IonCardContent
+  },
+  setup(){
+    return {
+      timeOutline,
+    }
   },
   data(){
     return {
@@ -58,6 +64,13 @@ export default {
 </script>
 
 <style scoped>
+  .start-time{
+    display: flex;
+    align-items: center;
+  }
+  .start-time ion-icon{
+    margin-right: 5px;
+  }
   .day-of-week{
       font-size: 6em;
       white-space: nowrap;
