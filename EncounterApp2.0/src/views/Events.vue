@@ -1,7 +1,6 @@
 <template>
     <base-layout pageTitle="Upcoming Events">
         <strong class="capitalize">{{ $route.params.id }}</strong>
-
         <ion-card v-for="event in events" :key="event.id" text-wrap>
           <ion-card-header>
               <ion-grid>
@@ -27,22 +26,18 @@
             </ion-grid>
           </ion-card-content>
         </ion-card>
-
-
     </base-layout>
 </template>
 
 <script>
-import { IonCard, IonGrid, IonRow, IonCol } from '@ionic/vue';
+import { IonCard, IonGrid, IonRow, IonCol, IonCardHeader, IonCardContent } from '@ionic/vue';
 import BaseLayout from '@/components/BaseLayout.vue';
 
 
 export default {
   name: 'Events',
   components: {
-    BaseLayout,
-    IonCard, 
-    IonGrid, IonRow, IonCol 
+    BaseLayout, IonCard, IonGrid, IonRow, IonCol, IonCardHeader, IonCardContent
   },
   data(){
     return {
