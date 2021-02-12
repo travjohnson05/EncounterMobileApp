@@ -10,7 +10,7 @@
                 </ion-col>
                 <ion-col>
                   <h2>{{event.startMonth}}</h2>
-                  <div class="start-time"><ion-icon :icon="timeOutline"></ion-icon>{{event.startTime}}</div>
+                  <div class="start-time" v-if="event.startTime != null"><ion-icon :icon="timeOutline"></ion-icon>{{event.startTime}}</div>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -19,7 +19,7 @@
             <ion-grid>
               <ion-row>
                 <ion-col>
-                  <h2>{{event.summary}}</h2>
+                  <h2 class="event-summary">{{event.summary}}</h2>
                   <p>{{event.description}}</p>
                 </ion-col>
               </ion-row>
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     getEvents(){
-      this.axios.get("http://travj.travjohnson.net/encounter-app-api/events").then((response) => {
+      this.axios.get("http://localhost:8080/encounter-app-api/events").then((response) => {
         this.events = response.data;
       })
     }
@@ -67,6 +67,7 @@ export default {
   .start-time{
     display: flex;
     align-items: center;
+    color: var(--ion-color-secondary-shade);
   }
   .start-time ion-icon{
     margin-right: 5px;
@@ -77,6 +78,9 @@ export default {
   }
   .date-row h2{
       font-size: 2em;
+  }
+  .event-summary{
+    color: var(--ion-color-secondary);
   }
   h2{
     font-size: 1.6em;
