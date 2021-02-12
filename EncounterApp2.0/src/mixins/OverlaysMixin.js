@@ -1,4 +1,4 @@
-import { loadingController, alertController } from '@ionic/vue';
+import { loadingController, alertController, toastController, modalController } from '@ionic/vue';
 
 
 export default {  
@@ -15,16 +15,15 @@ export default {
       this.loading = await loadingController
         .create({
           message: message ? message : "Loading...",
+          spinner: 'bubbles'
         });
       await this.loading.present();
-      console.log("loading popped");
     },  
 
     dismissLoading() {
       if(this.loading != null){
           this.loading.dismiss();
       }
-      console.log("loading dismissed");
     },
 
     async presentErrorAlertMessage(message) {
@@ -36,7 +35,26 @@ export default {
       this.alert.present();
     },
 
+    async presentToast(message) {
+      this.toast = await toastController
+        .create({
+          message: message,
+          duration: 3000,
+          position: 'top'
+        })
+      return this.toast.present();
+    },
 
+    async presentModal(modalVue) {
+      this.modal = await modalController
+        .create({
+          component: modalVue,
+          // componentProps: {
+          //   title: 'New Title'
+          // },
+        })
+      return this.modal.present();
+    }
   }
 
 

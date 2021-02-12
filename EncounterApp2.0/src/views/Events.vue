@@ -55,17 +55,16 @@ export default {
   methods: {
     getEvents(){
       this.presentLoading("Loading Events...");
-      this.axios.get("http://localhost:8080/encounter-app-api/events").then((response) => {
+      this.axios.get("http://localhost:8080/encounter-app-api/event").then((response) => {
         this.events = response.data;
         this.dismissLoading();
       }).catch((error) => {
         console.log(error);
-        setTimeout(() => {
+        setTimeout(() => { // is there a better way to dismiss after the async loading pops up?
           this.dismissLoading();
-          this.presentErrorAlertMessage();
+          this.presentErrorAlertMessage("There seems to be a problem with our events feed right now. Please try again later!");
         }, 1000);
       })
-      
     }
   },
   created(){
@@ -95,5 +94,8 @@ export default {
   }
   h2{
     font-size: 1.6em;
+  }
+  ion-card-header{
+    padding-bottom: 0px;
   }
 </style>
