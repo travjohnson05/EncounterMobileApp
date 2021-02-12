@@ -33,9 +33,11 @@
 import { IonCard, IonGrid, IonRow, IonCol, IonCardHeader, IonCardContent } from '@ionic/vue';
 import BaseLayout from '@/components/BaseLayout.vue';
 import { timeOutline } from 'ionicons/icons';
+import OverlaysMixin from '@/mixins/OverlaysMixin';
 
 
 export default {
+  mixins: [OverlaysMixin],
   name: 'Events',
   components: {
     BaseLayout, IonCard, IonGrid, IonRow, IonCol, IonCardHeader, IonCardContent
@@ -52,9 +54,18 @@ export default {
   },
   methods: {
     getEvents(){
+      this.presentLoading("Loading Events...");
       this.axios.get("http://localhost:8080/encounter-app-api/events").then((response) => {
         this.events = response.data;
+        this.dismissLoading();
+      }).catch((error) => {
+        console.log(error);
+        setTimeout(() => {
+          this.dismissLoading();
+          this.presentErrorAlertMessage();
+        }, 1000);
       })
+      
     }
   },
   created(){
@@ -67,7 +78,7 @@ export default {
   .start-time{
     display: flex;
     align-items: center;
-    color: var(--ion-color-secondary-shade);
+    color: var(--ion-color-primary-shade);
   }
   .start-time ion-icon{
     margin-right: 5px;
@@ -80,7 +91,7 @@ export default {
       font-size: 2em;
   }
   .event-summary{
-    color: var(--ion-color-secondary);
+    color: var(--ion-color-primary);
   }
   h2{
     font-size: 1.6em;
