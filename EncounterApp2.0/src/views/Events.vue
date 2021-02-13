@@ -55,7 +55,7 @@ export default {
   methods: {
     getEvents(){
       this.presentLoading("Loading Events...");
-      this.axios.get("http://localhost:8080/encounter-app-api/event").then((response) => {
+      this.axios.get("http://localhost:8080/encounter-app-api/events").then((response) => {
         this.events = response.data;
         this.dismissLoading();
       }).catch((error) => {
