@@ -3,7 +3,7 @@
         <strong class="capitalize">{{ $route.params.id }}</strong>
         <ion-card v-for="event in events" :key="event.id" text-wrap>
           <ion-card-header>
-              <ion-grid>
+            <ion-grid>
               <ion-row class="date-row">
                 <ion-col size="4" size-lg="2" class="day-of-week">
                   {{event.startDay}}
